@@ -40,18 +40,14 @@ private:
     }
 
     std::shared_ptr<Node>& minimum(std::shared_ptr<Node> x) {
-        while (x->left) {
-            x = x->left;
-        }
-
+        for (; x->left; x = x->left)
+            ;
         return x;
     }
 
     std::shared_ptr<Node>& maximum(std::shared_ptr<Node> x) {
-        while (x->right) {
-            x = x->right;
-        }
-
+        for (; x->right; x = x->right)
+            ;
         return x;
     }
 
