@@ -32,9 +32,8 @@ private:
     }
 
     std::shared_ptr<Node>& iterative_search(std::shared_ptr<Node> x, const T& k) {
-        while ((x) && (k != x->key)) {
+        while ((x) && (k != x->key))
             x = (k < x->key) ? (x->left) : (x->right);
-        }
 
         return x;
     }
@@ -92,12 +91,10 @@ private:
         x = std::make_shared<Node>(Node { v });
         x->parent = p;
 
-        if ((x->key) < (p->key)) {
+        if ((x->key) < (p->key))
             p->left = x;
-        }
-        else {
+        else
             p->right = x;
-        }
     }
 
     // void transplant(std::shared_prt<Node>& x, std::shared_ptr<Node>& y);
