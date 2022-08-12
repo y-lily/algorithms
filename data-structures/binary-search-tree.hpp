@@ -32,6 +32,7 @@ private:
     }
 
     std::shared_ptr<Node> iterative_search(std::shared_ptr<Node> x, const T& k) const {
+
         while ((x) && (k != x->key))
             x = (k < x->key) ? (x->left) : (x->right);
 
@@ -97,15 +98,62 @@ private:
             p->right = x;
     }
 
-    // void transplant(std::shared_prt<Node>& x, std::shared_ptr<Node>& y);
-    // void remove(std::shared_ptr<Node>& x);
+    void transplant(const std::shared_ptr<Node>& x, std::shared_ptr<Node>& y) {
+        auto p = x->parent;
+
+        if (!p)
+            root = nullptr;
+        else if ((x) == (p->left))
+            p->left = y;
+        else
+            p->right = y;
+
+        if (y)
+            y->parent = p;
+    }
+
+    void rm(std::shared_ptr<Node>& x) {
+        if (!(x->left))
+            transplant(x, x->right);
+        else if (!(x->right))
+            transplant(x, x->left);
+        else {
+            auto y = minimum(x->right);
+            if ((y->parent) != (x)) {
+                transplant(y, y->right);
+                y->right = x->right;
+                y->right->parent = y;
+            }
+
+            transplant(x, y);
+            y->left = x->left;
+            y->left->parent = y;
+        }
+    }
+
 
 public:
 
-    // void push(const T& value);
-    // T& pop(const T& value);
-    // bool contains(const T& value) const;
-    // T min() const;
-    // T max() const;
+    void add(const T& value) {
+        insert(value);
+    }
+
+    void remove(const T& value) {
+        if (auto n = iterative_search(root, value))
+            rm(n);
+    }
+
+    bool contains(const T& value) const {
+        return (bool) iterative_search(root, value);
+    }
+
+    T min() const {
+        return minimum(root);
+    }
+
+    T max() const {
+        return maximum(root);
+    }
+
     // T root_value() const;
 };
