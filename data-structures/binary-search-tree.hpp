@@ -25,32 +25,32 @@ private:
         inorder_walk(x->right, action);
     }
 
-    std::shared_ptr<Node>& search(const std::shared_ptr<Node>& x, const T& k) {
+    std::shared_ptr<Node> search(const std::shared_ptr<Node>& x, const T& k) const {
         if ((!x) || (k == x->key)) { return x; }
 
         return (k < x->key) ? (search(x->left, k)) : (search(x->right, k));
     }
 
-    std::shared_ptr<Node>& iterative_search(std::shared_ptr<Node> x, const T& k) {
+    std::shared_ptr<Node> iterative_search(std::shared_ptr<Node> x, const T& k) const {
         while ((x) && (k != x->key))
             x = (k < x->key) ? (x->left) : (x->right);
 
         return x;
     }
 
-    std::shared_ptr<Node>& minimum(std::shared_ptr<Node> x) {
+    std::shared_ptr<Node> minimum(std::shared_ptr<Node> x) const {
         for (; x->left; x = x->left)
             ;
         return x;
     }
 
-    std::shared_ptr<Node>& maximum(std::shared_ptr<Node> x) {
+    std::shared_ptr<Node> maximum(std::shared_ptr<Node> x) const {
         for (; x->right; x = x->right)
             ;
         return x;
     }
 
-    std::shared_ptr<Node>& predecessor(std::shared_ptr<Node> x) {
+    std::shared_ptr<Node> predecessor(std::shared_ptr<Node> x) const {
         if (x->left) { return maximum(x->left); }
 
         auto p = x->parent;
@@ -62,7 +62,7 @@ private:
         return p;
     }
 
-    std::shared_ptr<Node>& successor(std::shared_ptr<Node> x) {
+    std::shared_ptr<Node> successor(std::shared_ptr<Node> x) const {
         if (x->right) { return minimum(x->right); }
 
         auto s = x->parent;
